@@ -52,6 +52,7 @@ app.post("/coach", async (req, res) => {
   }
 });
 
+
 const port = Number(process.env.PORT ?? 3000);
 
 if (require.main === module) {
@@ -61,3 +62,20 @@ if (require.main === module) {
 }
 
 export default app;
+
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, () =>
+  console.log(`🚀  Server running on http://localhost:${port}`)
+);
+
+export default app;
+
+if (require.main === module) {
+  app.listen(3000, () =>
+    console.log("🚀  Server running on http://localhost:3000")
+  );
+}
+
+
