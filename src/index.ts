@@ -19,15 +19,23 @@ app.post("/coach", async (req, res) => {
     return res.status(400).json({ error: "splits must be an array" });
   }
 
+  // Convert potential numeric strings and validate
+  const parsed = splits.map((s: unknown) => Number(s));
+  if (parsed.some((n) => Number.isNaN(n))) {
+    return res
+      .status(400)
+      .json({ error: "splits must contain only numeric values" });
+  }
+
   try {
     const reply = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
         {
           role: "user",
-          content: `My last rowing workout splits were ${splits.join(
-            ", "
-          )} sec/500m. Give me 3 coaching tips to improve.`,
+          content: `My last rowing workout splits were ${parsed
+            .map((n) => n.toFixed(2))
+            .join(", ")} sec/500m. Give me 3 coaching tips to improve.`,
         },
       ],
     });
