@@ -47,6 +47,13 @@ app.post("/coach", async (req, res) => {
   }
 });
 
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, () =>
+  console.log(`🚀  Server running on http://localhost:${port}`)
+);
+=======
 export default app;
 
 if (require.main === module) {
@@ -54,3 +61,4 @@ if (require.main === module) {
     console.log("🚀  Server running on http://localhost:3000")
   );
 }
+
