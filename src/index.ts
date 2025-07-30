@@ -2,7 +2,7 @@ import express from "express";
 import * as dotenv from "dotenv";
 import OpenAI from "openai";
 
-dotenv.config();                 // loads OPENAI_API_KEY from .env
+dotenv.config();                 // loads vars like OPENAI_API_KEY and PORT
 const openai = new OpenAI();
 
 const app = express();
@@ -47,6 +47,7 @@ app.post("/coach", async (req, res) => {
   }
 });
 
-app.listen(3000, () =>
-  console.log("🚀  Server running on http://localhost:3000")
+const port = Number(process.env.PORT ?? 3000);
+app.listen(port, () =>
+  console.log(`🚀  Server running on http://localhost:${port}`)
 );

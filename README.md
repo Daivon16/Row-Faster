@@ -13,9 +13,10 @@ This project is an Express API that provides rowing coaching tips using OpenAI.
    cp .env.example .env
    # then edit .env and fill in your key
    ```
+   You can also change the `PORT` value here if you don't want to use 3000.
 3. Start the server:
    ```bash
    npm run dev
    ```
 
-The API will run on `http://localhost:3000` by default. You can change the port in `.env`.
+The API will run on `http://localhost:3000` by default. Set `PORT` in `.env` to use a different port.
