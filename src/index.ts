@@ -2,8 +2,7 @@ import express from "express";
 import * as dotenv from "dotenv";
 import OpenAI from "openai";
 
-dotenv.config();                 // loads OPENAI_API_KEY from .env
-const openai = new OpenAI();
+dotenv.config();                 // loads vars like OPENAI_API_KEY and PORT
 
 const app = express();
 app.use(express.json());         // parse JSON bodies
@@ -27,6 +26,12 @@ app.post("/coach", async (req, res) => {
       .json({ error: "splits must contain only numeric values" });
   }
 
+  if (!process.env.OPENAI_API_KEY) {
+    return res.status(500).json({ error: "OPENAI_API_KEY not set" });
+  }
+
+  const openai = new OpenAI();
+
   try {
     const reply = await openai.chat.completions.create({
       model: "gpt-4o-mini",
@@ -48,12 +53,23 @@ app.post("/coach", async (req, res) => {
 });
 
 
+const port = Number(process.env.PORT ?? 3000);
+
+if (require.main === module) {
+  app.listen(port, () =>
+    console.log(`🚀  Server running on http://localhost:${port}`)
+  );
+}
+
+export default app;
+
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () =>
   console.log(`🚀  Server running on http://localhost:${port}`)
 );
-=======
+
 export default app;
 
 if (require.main === module) {
@@ -61,4 +77,5 @@ if (require.main === module) {
     console.log("🚀  Server running on http://localhost:3000")
   );
 }
+
 
